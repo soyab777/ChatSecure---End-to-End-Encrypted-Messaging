@@ -1,0 +1,29 @@
+{
+  "name": "chat-secure",
+  "version": "1.0.0",
+  "description": "End-to-end encrypted chat application",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "client": "cd client && npm start",
+    "server": "cd server && node server.js",
+    "dev:full": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.3.1",
+    "express": "^4.21.2",
+    "firebase-admin": "^11.10.1",
+    "jsonwebtoken": "^9.0.1",
+    "mongoose": "^7.5.0",
+    "multer": "^1.4.5-lts.1",
+    "socket.io": "^4.8.1",
+    "concurrently": "^8.0.1"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.1",
+    "nodemon": "^3.0.1"
+  }
+}
