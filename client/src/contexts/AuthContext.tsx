@@ -12,7 +12,7 @@ import {
   PhoneMultiFactorGenerator,
   getAuth
 } from 'firebase/auth';
-import { auth } from '../firebase';
+import { auth } from '../config/firebase';
 
 interface AuthContextType {
   auth: Auth;
@@ -46,7 +46,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   async function logout() {
-    return signOut(auth);
+    await signOut(auth);
+    // Clear any stored user data
+    localStorage.removeItem('user');
+    // Clear any stored encryption keys or sensitive data
+    sessionStorage.clear();
   }
 
   async function enrollMFA(phoneNumber: string) {
@@ -67,6 +71,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, user => {
       setCurrentUser(user);
+      if (user) {
+        // Store minimal user data
+        localStorage.setItem('user', JSON.stringify({
+          uid: user.uid,
+          email: user.email
+        }));
+      }
       setLoading(false);
     });
 

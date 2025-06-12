@@ -34,8 +34,16 @@ const Signup: React.FC = () => {
       const userCredential = await signup(email, password);
       localStorage.setItem('user', JSON.stringify(userCredential.user));
       navigate('/chat');
-    } catch (error) {
-      setError('Failed to create account');
+    } catch (error: any) {
+      if (error.code === 'auth/email-already-in-use') {
+        setError('This email is already registered. Please use a different email or sign in.');
+      } else if (error.code === 'auth/weak-password') {
+        setError('Password should be at least 6 characters long.');
+      } else if (error.code === 'auth/invalid-email') {
+        setError('Please enter a valid email address.');
+      } else {
+        setError('Failed to create account. Please try again.');
+      }
       console.error('Signup error:', error);
     } finally {
       setLoading(false);

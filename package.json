@@ -7,7 +7,7 @@
     "start": "node server.js",
     "dev": "nodemon server.js",
     "client": "cd client && npm start",
-    "server": "cd server && node server.js",
+    "server": "node server.js",
     "dev:full": "concurrently \"npm run server\" \"npm run client\""
   },
   "dependencies": {
